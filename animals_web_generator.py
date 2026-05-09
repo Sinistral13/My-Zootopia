@@ -4,8 +4,16 @@ import requests
 
 def load_data(file_path):
   """Load a JSON file."""
-  with open(file_path, "r") as handle:
-    return json.load(handle)
+  with open(file_path, "r") as file:
+    return json.load(file)
+
+
+def get_animal_name():
+    """Prompt the user for an animal name."""
+    while True:
+        animal_name = input("Please enter an animal name:    ")
+        if animal_name:
+            return animal_name
 
 
 def get_animal_from_api(animal_name="Fox"):
@@ -13,10 +21,13 @@ def get_animal_from_api(animal_name="Fox"):
     url = f"https://api.api-ninjas.com/v1/animals?name={animal_name}"
     headers = {"X-Api-Key": "RKsW2jtYaYDszFRA8SIukjJhp1ujBVANslLfZe1g"}
     data = requests.get(url, headers=headers).json()
-
-    with open("animal_api.json", "w") as file:
-        json.dump(data, file, indent=4)
-
+    
+    if data:
+        with open("animal_api.json", "w") as file:
+            json.dump(data, file, indent=4)
+            print("Website was successfully generated to the file animals.html")
+    else:
+        print("No such animal in database.")
 
 def serialize_animal(animal_obj):
     """Create a formatted string with the data of an animal for printing."""
@@ -74,14 +85,14 @@ def replace_placeholder_in_template(template_html_file, placeholder, data_string
 
 
 def main():
-    get_animal_from_api()
+    animal_name = get_animal_name()
+    get_animal_from_api(animal_name)
     animals_data = load_data("animal_api.json")
     animal_data_for_printing = print_animals_data(animals_data)
     html_file = get_html_template("animals_template.html")
     replace_placeholder_in_template(html_file, "__REPLACE_ANIMALS_INFO__",
-     animal_data_for_printing)
+    animal_data_for_printing)
 
    
-    
 if __name__ == "__main__":
     main()
