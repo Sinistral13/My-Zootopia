@@ -1,4 +1,5 @@
 import json
+import requests
 
 
 def load_data(file_path):
@@ -7,28 +8,37 @@ def load_data(file_path):
     return json.load(handle)
 
 
+def get_animal_from_api(animal_name="Fox"):
+    """Load animal from API and store it as .json file."""
+    url = f"https://api.api-ninjas.com/v1/animals?name={animal_name}"
+    headers = {"X-Api-Key": "RKsW2jtYaYDszFRA8SIukjJhp1ujBVANslLfZe1g"}
+    data = requests.get(url, headers=headers).json()
+
+    with open("animal_api.json", "w") as file:
+        json.dump(data, file, indent=4)
+
+
 def serialize_animal(animal_obj):
     """Create a formatted string with the data of an animal for printing."""
     output = ""
     
-    name = animal_obj.get("name")
-    diet = animal_obj.get("characteristics", {}).get("diet")
-    animal_type = animal_obj.get("characteristics", {}).get("type")
+    name = animal_obj.get("name", {})
+    diet = animal_obj.get("characteristics",{}).get("type",{})
+    animal_type = animal_obj.get("characteristics", {}).get("type",{})
     locations = animal_obj.get("locations")[0]
 
     animals_data_for_printing = {}
-    if name is not None:
+    if name:
         animals_data_for_printing["Name"] = name
-    if diet is not None:
+    if diet:
         animals_data_for_printing["Diet"] = diet
-    if locations is not None:
+    if locations:
         animals_data_for_printing["Location"] = locations
-    if animal_type is not None:
+    if animal_type:
         animals_data_for_printing["Type"] = animal_type        
     output += '<li class="cards__item">\n'
     for datatype, datavalue in animals_data_for_printing.items():
         output += (f"<strong>{datatype}</strong> : {datavalue}<br/>\n")
-    ##output += "<br/>"
         
     return output
 
@@ -64,11 +74,13 @@ def replace_placeholder_in_template(template_html_file, placeholder, data_string
 
 
 def main():
-    animals_data = load_data('animals_data.json')
+    get_animal_from_api()
+    animals_data = load_data("animal_api.json")
     animal_data_for_printing = print_animals_data(animals_data)
     html_file = get_html_template("animals_template.html")
     replace_placeholder_in_template(html_file, "__REPLACE_ANIMALS_INFO__",
      animal_data_for_printing)
+
    
     
 if __name__ == "__main__":
