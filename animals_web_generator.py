@@ -25,13 +25,11 @@ def print_animals_data(animals_data):
         if locations is not None:
             animals_data_for_printing["Location"] = locations
         if animal_type is not None:
-            animals_data_for_printing["Type"] = animal_type
-        width = max(len(datatype) for datatype in animals_data_for_printing)
-        
+            animals_data_for_printing["Type"] = animal_type        
 
         for datatype, datavalue in animals_data_for_printing.items():
-            output += (f"{datatype:<{width}} : {datavalue}\n")
-        output += "\n"
+            output += (f"<strong>{datatype}</strong> : {datavalue}<br/>\n")
+        output += "<br/>\n"
         
     return output
         
