@@ -59,7 +59,7 @@ def replace_placeholder_in_html(html_file, placeholder, data):
 def main():
     animals_data = load_data('animals_data.json')
     animal_data_for_printing = print_animals_data(animals_data)
-    html_file =  get_html_template("animals_template.html")
+    html_file = get_html_template("animals_template.html")
     replace_placeholder_in_html(html_file, "__REPLACE_ANIMALS_INFO__",
      animal_data_for_printing)
    
