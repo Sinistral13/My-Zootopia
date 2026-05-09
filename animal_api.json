@@ -1,41 +1,6 @@
 [
     {
-        "name": "Piranha",
-        "taxonomy": {
-            "kingdom": "Animalia",
-            "phylum": "Chordata",
-            "class": "Actinopterygii",
-            "order": "Characiformes",
-            "family": "Characidae"
-        },
-        "locations": [
-            "South-America"
-        ],
-        "characteristics": {
-            "main_prey": "Insects, carrion, fish, crustaceans, worms",
-            "group_behavior": "School",
-            "estimated_population_size": "Unknown",
-            "biggest_threat": "Other animals",
-            "most_distinctive_feature": "Strong bony jaws with finely serrated teeth",
-            "distinctive_feature": "Rounded head and a single row and triangular teeth",
-            "other_name(s)": "Caribe or piraya",
-            "gestation_period": "4 to 6 weeks",
-            "water_type": "Fresh",
-            "optimum_ph_level": "6.5 and 7.8",
-            "habitat": "Rivers, floodplains, lakes and reservoirs",
-            "predators": "Dolphins, crocodiles, birds, turtles, humans",
-            "diet": "Omnivore",
-            "favorite_food": "Fish",
-            "type": "Characids",
-            "common_name": "Piranha",
-            "average_clutch_size": "5000",
-            "slogan": "Generally found in fast-flowing streams!",
-            "color": "GreyRedBlackMulti-colored",
-            "skin_type": "Scales",
-            "top_speed": "-3 mph",
-            "lifespan": "10 years",
-            "weight": "Up to 3 to 7 pounds",
-            "length": "6 to 8 inches average"
-        }
+        "name": "thg",
+        "taxonomy": "Not Found"
     }
 ]

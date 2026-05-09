@@ -4,8 +4,8 @@ import requests
 
 def load_data(file_path):
   """Load a JSON file."""
-  with open(file_path, "r") as file:
-    return json.load(file)
+  with open(file_path, "r") as handle:
+    return json.load(handle)
 
 
 def get_animal_name():
@@ -22,34 +22,43 @@ def get_animal_from_api(animal_name="Fox"):
     headers = {"X-Api-Key": "RKsW2jtYaYDszFRA8SIukjJhp1ujBVANslLfZe1g"}
     data = requests.get(url, headers=headers).json()
     
-    if data:
-        with open("animal_api.json", "w") as file:
-            json.dump(data, file, indent=4)
-            print("Website was successfully generated to the file animals.html")
-    else:
-        print("No such animal in database.")
+    if not data:
+        data = [{
+            "name" : animal_name,
+            "taxonomy" : "Not Found"    
+                }]
+    with open("animal_api.json", "w") as file:
+        json.dump(data, file, indent=4)
+        print("Website was successfully generated to the file animals.html")
+        
 
 def serialize_animal(animal_obj):
     """Create a formatted string with the data of an animal for printing."""
     output = ""
     
     name = animal_obj.get("name", {})
-    diet = animal_obj.get("characteristics",{}).get("type",{})
-    animal_type = animal_obj.get("characteristics", {}).get("type",{})
-    locations = animal_obj.get("locations")[0]
+    if not name:
+        output += f'<h2>An unexpected error occurred.</h2>'
+    
+    elif animal_obj.get("taxonomy") == "Not Found":
+        output += f'<h2>The animal "{name}" does not exist in the database.</h2>'
+    else:
+        diet = animal_obj.get("characteristics",{}).get("type",{})
+        animal_type = animal_obj.get("characteristics", {}).get("type",{})
+        locations = animal_obj.get("locations")[0]
 
-    animals_data_for_printing = {}
-    if name:
-        animals_data_for_printing["Name"] = name
-    if diet:
-        animals_data_for_printing["Diet"] = diet
-    if locations:
-        animals_data_for_printing["Location"] = locations
-    if animal_type:
-        animals_data_for_printing["Type"] = animal_type        
-    output += '<li class="cards__item">\n'
-    for datatype, datavalue in animals_data_for_printing.items():
-        output += (f"<strong>{datatype}</strong> : {datavalue}<br/>\n")
+        animals_data_for_printing = {}
+
+        if diet:
+            animals_data_for_printing["Diet"] = diet
+        if locations:
+            animals_data_for_printing["Location"] = locations
+        if animal_type:
+            animals_data_for_printing["Type"] = animal_type        
+        output += '<li class="cards__item">\n'
+        
+        for datatype, datavalue in animals_data_for_printing.items():
+            output += (f"<strong>{datatype}</strong> : {datavalue}<br/>\n")
         
     return output
 
