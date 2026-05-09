@@ -1,11 +1,5 @@
 import json
-import requests
-
-
-def load_data(file_path):
-  """Load a JSON file."""
-  with open(file_path, "r") as handle:
-    return json.load(handle)
+import data_fetcher
 
 
 def get_animal_name():
@@ -16,20 +10,10 @@ def get_animal_name():
             return animal_name
 
 
-def get_animal_from_api(animal_name="Fox"):
-    """Load animal from API and store it as .json file."""
-    url = f"https://api.api-ninjas.com/v1/animals?name={animal_name}"
-    headers = {"X-Api-Key": "RKsW2jtYaYDszFRA8SIukjJhp1ujBVANslLfZe1g"}
-    data = requests.get(url, headers=headers).json()
-    
-    if not data:
-        data = [{
-            "name" : animal_name,
-            "taxonomy" : "Not Found"    
-                }]
-    with open("animal_api.json", "w") as file:
-        json.dump(data, file, indent=4)
-        print("Website was successfully generated to the file animals.html")
+def get_animal_data(animal_name):
+    """Load animal data."""
+    data = data_fetcher.fetch_data(animal_name)
+    return data
         
 
 def serialize_animal(animal_obj):
@@ -48,7 +32,7 @@ def serialize_animal(animal_obj):
         locations = animal_obj.get("locations")[0]
 
         animals_data_for_printing = {}
-
+        animals_data_for_printing["Name"] = name
         if diet:
             animals_data_for_printing["Diet"] = diet
         if locations:
@@ -95,8 +79,7 @@ def replace_placeholder_in_template(template_html_file, placeholder, data_string
 
 def main():
     animal_name = get_animal_name()
-    get_animal_from_api(animal_name)
-    animals_data = load_data("animal_api.json")
+    animals_data = get_animal_data(animal_name)
     animal_data_for_printing = print_animals_data(animals_data)
     html_file = get_html_template("animals_template.html")
     replace_placeholder_in_template(html_file, "__REPLACE_ANIMALS_INFO__",
