@@ -22,6 +22,12 @@ def fetch_data(animal_name):
     """
     load_dotenv()
     API_KEY = os.getenv('API_KEY')
+    
+    if not API_KEY:
+        raise ValueError(
+        "API_KEY not found. Please add your API key to the .env file."
+        )
+    
     url = f"https://api.api-ninjas.com/v1/animals?name={animal_name}"
     headers = {"X-Api-Key": API_KEY}
     data = requests.get(url, headers=headers).json()
