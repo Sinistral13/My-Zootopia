@@ -13,7 +13,7 @@ def print_animals_data(animals_data):
         name = animal.get("name")
         diet = animal.get("characteristics", {}).get("diet")
         animal_type = animal.get("characteristics", {}).get("type")
-        locations = animal.get("locations")
+        locations = animal.get("locations")[0]
 
         animals_data_for_printing = {}
         if name is not None:
