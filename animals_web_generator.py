@@ -26,7 +26,7 @@ def print_animals_data(animals_data):
             animals_data_for_printing["Location"] = locations
         if animal_type is not None:
             animals_data_for_printing["Type"] = animal_type        
-
+        output += '<li class="cards__item">\n'
         for datatype, datavalue in animals_data_for_printing.items():
             output += (f"<strong>{datatype}</strong> : {datavalue}<br/>\n")
         output += "<br/>\n"
@@ -51,7 +51,7 @@ def replace_placeholder_in_html(html_file, placeholder, data):
     """Replace the placeholder with the data in a .html file.
     Writes the new .html file to directory."""
     new_html_file = html_file.replace(placeholder, data)
-    write_html_file(new_html_file, "animal_data.html") 
+    write_html_file(new_html_file, "animals.html") 
 
 
 def main():
